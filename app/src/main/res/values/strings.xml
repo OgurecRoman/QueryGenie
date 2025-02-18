@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">QueryGenie</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="queries">Запросы</string>
+    <string name="patterns">Шаблоны</string>
+    <string name="history">История</string>
 </resources>

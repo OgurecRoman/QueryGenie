@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homepageFragment"
+        android:icon="@drawable/dialogue"
+        android:title="@string/queries" />
+    <item
+        android:id="@+id/patternsFragment"
+        android:icon="@drawable/list"
+        android:title="@string/patterns" />
+    <item
+        android:id="@+id/historyFragment"
+        android:icon="@drawable/watches"
+        android:title="@string/history" />
+
+</menu>
