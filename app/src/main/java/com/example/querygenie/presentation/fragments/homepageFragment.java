@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -76,6 +77,7 @@ public class homepageFragment extends Fragment {
 
         EditText editText = view.findViewById(R.id.query);
         Button sendBut = view.findViewById(R.id.send);
+        ImageButton deleteBut = view.findViewById(R.id.butDelete);
         progressBar = view.findViewById(R.id.loading);
         answerView = view.findViewById(R.id.ans);
 
@@ -88,6 +90,13 @@ public class homepageFragment extends Fragment {
                 sendQuery(text);
                 answerView.setText("");
                 progressBar.setVisibility(View.VISIBLE);
+            }
+        });
+
+        deleteBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editText.setText("");
             }
         });
 
