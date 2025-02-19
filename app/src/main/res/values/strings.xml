@@ -4,4 +4,9 @@
     <string name="queries">Запросы</string>
     <string name="patterns">Шаблоны</string>
     <string name="history">История</string>
+    <string name="help_text">Начните печатать…</string>
+    <string name="query_head">Введите ваш запрос</string>
+    <string name="send">Отправить</string>
+    <string name="answer">Ответ</string>
+    
 </resources>

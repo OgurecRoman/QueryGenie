@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".domain.MainActivity"
-    android:layout_margin="8dp">
+    android:layout_marginTop="80dp"
+    android:orientation="vertical">
 
     <fragment
         android:id="@+id/my_nav_graph"
@@ -13,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultNavHost="true"
+        android:layout_weight="1"
         app:navGraph="@navigation/nav_graph">
 
     </fragment>
@@ -25,4 +27,4 @@
         android:layout_alignBottom="@+id/my_nav_graph"
         />
 
-</RelativeLayout>
+</LinearLayout>

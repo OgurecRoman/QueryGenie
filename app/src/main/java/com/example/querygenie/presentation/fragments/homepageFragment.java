@@ -1,7 +1,5 @@
 package com.example.querygenie.presentation.fragments;
 
-import static android.app.Activity.RESULT_OK;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,24 +7,22 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.querygenie.R;
 import com.example.querygenie.domain.query.QueryService;
-import com.example.querygenie.presentation.viewModel.SharedViewModel;
 
 public class homepageFragment extends Fragment {
-    SharedViewModel viewModel;
     TextView answerView;
+    ProgressBar progressBar;
 
     public homepageFragment() {
     }
@@ -53,6 +49,7 @@ public class homepageFragment extends Fragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             if ("RESPONSE".equals(intent.getAction())) {
+                progressBar.setVisibility(View.GONE);
                 String response = intent.getStringExtra("response");
                 answerView.setText(response);
             }
@@ -79,13 +76,18 @@ public class homepageFragment extends Fragment {
 
         EditText editText = view.findViewById(R.id.query);
         Button sendBut = view.findViewById(R.id.send);
+        progressBar = view.findViewById(R.id.loading);
         answerView = view.findViewById(R.id.ans);
+
+        progressBar.setVisibility(View.GONE);
 
         sendBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String text = editText.getText().toString();
                 sendQuery(text);
+                answerView.setText("");
+                progressBar.setVisibility(View.VISIBLE);
             }
         });
 
