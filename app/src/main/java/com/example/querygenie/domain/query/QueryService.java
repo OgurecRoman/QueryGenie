@@ -1,21 +1,13 @@
 package com.example.querygenie.domain.query;
 
-import android.app.Application;
 import android.app.Service;
 import android.content.Intent;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
-import android.os.Message;
-import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.querygenie.domain.model.RequestModel;
 import com.example.querygenie.domain.model.ResponseModel;
-import com.example.querygenie.presentation.viewModel.SharedViewModel;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class QueryService extends Service {
 
-    private void sendResponse(String response){
+    private void sendResponse(String response) {
         Intent broadcastIntent = new Intent("RESPONSE");
         broadcastIntent.putExtra("response", response);
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(broadcastIntent);
@@ -44,17 +36,16 @@ public class QueryService extends Service {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 if (response.isSuccessful()) {
-                    Log.d("aaa", "Успешный запрос " + response);
                     String responseText = response.body().getResponse();
                     sendResponse(responseText);
                 } else {
-                    Log.d("aaa", "НЕуспешный запрос " + response);
+                    sendResponse("Произошла какая-то ошибка.");
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseModel> call, Throwable t) {
-                Log.d("aaa", "ошипка " + t.getMessage());
+                sendResponse("Произошла какая-то ошибка. Попробуйте позже.");
             }
         });
         return START_NOT_STICKY;
