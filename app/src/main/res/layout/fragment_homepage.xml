@@ -8,21 +8,134 @@
     android:orientation="vertical"
     tools:context=".presentation.fragments.homepageFragment">
 
-    <TableLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:background="@drawable/borders">
+        android:layout_weight="10"
+        android:gravity="center"
+        android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
 
-    </TableLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/font_family"
+                android:text="@string/pattern_head"
+                android:textSize="25sp" />
+
+            <ImageButton
+                android:id="@+id/butDeletePattern"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/clear" />
+
+        </LinearLayout>
+
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/borders"
+            android:stretchColumns="1">
+
+            <TableRow
+                android:layout_margin="8dp"
+                android:layout_weight="2">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/font_family"
+                    android:text="@string/role"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/role"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10"
+                    android:fontFamily="@font/font_family"
+                    android:textStyle="italic" />
+            </TableRow>
+
+            <TableRow
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="2">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/font_family"
+                    android:text="@string/goal"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/goal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10"
+                    android:fontFamily="@font/font_family"
+                    android:textStyle="italic" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="2">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/font_family"
+                    android:text="@string/environment"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/environment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10"
+                    android:fontFamily="@font/font_family"
+                    android:textStyle="italic" />
+            </TableRow>
+
+            <TableRow
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_marginBottom="8dp">
+
+                <Button
+                    android:id="@+id/saveBut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/but_style"
+                    android:fontFamily="@font/font_family"
+                    android:text="@string/save"
+                    android:textSize="18sp" />
+
+            </TableRow>
+
+        </TableLayout>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
         android:layout_marginTop="8dp"
+        android:layout_weight="10"
+        android:gravity="center"
         android:orientation="vertical">
 
         <LinearLayout
@@ -40,28 +153,28 @@
                 android:textSize="25sp" />
 
             <ImageButton
-                android:id="@+id/butDelete"
+                android:id="@+id/butDeleteQuery"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@drawable/delete"/>
+                android:src="@drawable/clear" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/borders"
-            android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:layout_weight="20"
+            android:background="@drawable/borders"
             android:orientation="vertical">
 
             <EditText
                 android:id="@+id/query"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="start"
                 android:fontFamily="@font/font_family"
+                android:gravity="start"
                 android:hint="@string/help_text"
                 android:textStyle="italic"
                 tools:ignore="NestedWeights" />
@@ -83,9 +196,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
         android:layout_marginTop="8dp"
+        android:layout_weight="5"
+        android:gravity="center"
         android:orientation="vertical">
 
         <TextView

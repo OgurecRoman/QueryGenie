@@ -21,6 +21,8 @@ import android.widget.TextView;
 import com.example.querygenie.R;
 import com.example.querygenie.domain.query.QueryService;
 
+import java.util.Objects;
+
 public class homepageFragment extends Fragment {
     TextView answerView;
     ProgressBar progressBar;
@@ -38,6 +40,20 @@ public class homepageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    private String patternText(String role, String goal, String environment) {
+        String text = "";
+        if (!Objects.equals(role, "")) {
+            text += "Роль: " + role;
+        }
+        if (!Objects.equals(goal, "")) {
+            text += "\nЦель: " + goal;
+        }
+        if (!Objects.equals(environment, "")) {
+            text += "\nОкружение: " + environment;
+        }
+        return text;
     }
 
     private void sendQuery(String text) {
@@ -75,9 +91,16 @@ public class homepageFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_homepage, container, false);
 
-        EditText editText = view.findViewById(R.id.query);
+        EditText editQuery = view.findViewById(R.id.query);
+        EditText editRole = view.findViewById(R.id.role);
+        EditText editGoal = view.findViewById(R.id.goal);
+        EditText editEnvironment = view.findViewById(R.id.environment);
+
         Button sendBut = view.findViewById(R.id.send);
-        ImageButton deleteBut = view.findViewById(R.id.butDelete);
+        Button saveBut = view.findViewById(R.id.saveBut);
+        ImageButton deleteQueryBut = view.findViewById(R.id.butDeleteQuery);
+        ImageButton deletePatternBut = view.findViewById(R.id.butDeletePattern);
+
         progressBar = view.findViewById(R.id.loading);
         answerView = view.findViewById(R.id.ans);
 
@@ -86,17 +109,29 @@ public class homepageFragment extends Fragment {
         sendBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String text = editText.getText().toString();
+                String textQuery = editQuery.getText().toString();
+                String textPattern = patternText(editRole.getText().toString(),
+                        editGoal.getText().toString(), editEnvironment.getText().toString());
+                String text = textPattern + "\n" + textQuery;
                 sendQuery(text);
                 answerView.setText("");
                 progressBar.setVisibility(View.VISIBLE);
             }
         });
 
-        deleteBut.setOnClickListener(new View.OnClickListener() {
+        deleteQueryBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editText.setText("");
+                editQuery.setText("");
+            }
+        });
+
+        deletePatternBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editRole.setText("");
+                editEnvironment.setText("");
+                editGoal.setText("");
             }
         });
 
