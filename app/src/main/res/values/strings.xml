@@ -8,5 +8,10 @@
     <string name="query_head">Введите ваш запрос</string>
     <string name="send">Отправить</string>
     <string name="answer">Ответ</string>
+    <string name="role">Роль</string>
+    <string name="goal">Цель</string>
+    <string name="environment">Окружение</string>
+    <string name="pattern_head">Шаблон</string>
+    <string name="save">Сохранить</string>
     
 </resources>
