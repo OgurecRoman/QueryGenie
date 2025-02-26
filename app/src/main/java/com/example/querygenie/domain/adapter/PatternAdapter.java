@@ -1,6 +1,7 @@
 package com.example.querygenie.domain.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.querygenie.R;
@@ -38,12 +40,11 @@ public class PatternAdapter extends RecyclerView.Adapter<PatternAdapter.ViewHold
     public void onBindViewHolder(PatternAdapter.ViewHolder holder, int position) {
         PatternModel patternModel = items.get(position);
         boolean isliked = patternModel.getIsliked();
-        Log.d("fff", "имя: " + patternModel.getName());
         holder.name_text.setText(patternModel.getName());
         holder.role_text.setText(patternModel.getRole());
         holder.goal_text.setText(patternModel.getGoal());
         holder.environment_text.setText(patternModel.getEnvironment());
-        if (isliked){
+        if (isliked) {
             holder.favourite_but.setImageResource(R.drawable.heartactive);
         }
 
@@ -64,13 +65,38 @@ public class PatternAdapter extends RecyclerView.Adapter<PatternAdapter.ViewHold
                 dbPattern.delete(items.get(position).getId());
                 items.remove(position);
                 notifyItemRemoved(position);
+                notifyItemRangeChanged(position, items.size());
+            }
+        });
+
+        holder.use_but.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("PatternID", items.get(position).getId());
+                bundle.putBoolean("IsEdit", false);
+
+                Navigation.findNavController(view)
+                        .navigate(R.id.action_patternsFragment_to_homepageFragment, bundle);
+            }
+        });
+
+        holder.edit_but.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("PatternID", items.get(position).getId());
+                bundle.putBoolean("IsEdit", true);
+
+                Navigation.findNavController(view)
+                        .navigate(R.id.action_patternsFragment_to_homepageFragment, bundle);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return dbPattern.selectAll().size();
+        return items.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

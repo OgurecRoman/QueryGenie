@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.querygenie.R;
+import com.example.querygenie.data.model.PatternModel;
 import com.example.querygenie.domain.query.Query;
 import com.example.querygenie.domain.queryService.QueryService;
 
@@ -33,12 +34,31 @@ public class homepageFragment extends Fragment {
     private TextView answerView;
     private ProgressBar progressBar;
 
+    private static final String ARG_PATTERN = "PatternID";
+    private static final String ARG_EDIT = "IsEdit";
+
+    private int mPatternId;
+    private boolean mIsEdit;
+
     public homepageFragment() {
+    }
+
+    public static historyFragment newInstance(String param1, String param2) {
+        historyFragment fragment = new historyFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PATTERN, param1);
+        args.putString(ARG_EDIT, param2);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mPatternId = getArguments().getInt(ARG_PATTERN);
+            mIsEdit = getArguments().getBoolean(ARG_EDIT);
+        }
     }
 
     private void sendQuery(String text) {
@@ -124,6 +144,17 @@ public class homepageFragment extends Fragment {
 
         query = new Query(getActivity());
 
+        if (mPatternId > 0){
+            query.installPattern(mPatternId);
+            editRole.setText(query.getRole());
+            editGoal.setText(query.getGoal());
+            editEnvironment.setText(query.getEnvironment());
+
+            if (mIsEdit){
+                saveBut.setText(R.string.save_changes);
+            }
+        }
+
         sendBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -143,7 +174,13 @@ public class homepageFragment extends Fragment {
                 query.setRole(editRole.getText().toString());
                 query.setGoal(editGoal.getText().toString());
                 query.setEnvironment(editEnvironment.getText().toString());
-                showInputDialog();
+                if (mIsEdit){
+                    query.updatePattern(mPatternId);
+                    saveBut.setText(R.string.save);
+                    Toast.makeText(getActivity(), "Шаблон обновлен", Toast.LENGTH_SHORT).show();
+                }
+                else
+                    showInputDialog();
             }
         });
 

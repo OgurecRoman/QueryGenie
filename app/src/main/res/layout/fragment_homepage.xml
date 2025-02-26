@@ -110,7 +110,7 @@
                     android:textStyle="italic" />
             </TableRow>
 
-            <TableRow
+            <LinearLayout
                 android:layout_weight="1"
                 android:gravity="center"
                 android:layout_marginBottom="8dp">
@@ -124,7 +124,7 @@
                     android:text="@string/save"
                     android:textSize="18sp" />
 
-            </TableRow>
+            </LinearLayout>
 
         </TableLayout>
 

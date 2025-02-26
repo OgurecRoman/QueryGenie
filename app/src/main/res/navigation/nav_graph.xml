@@ -14,7 +14,11 @@
         android:id="@+id/patternsFragment"
         android:name="com.example.querygenie.presentation.fragments.patternsFragment"
         android:label="Шаблоны"
-        tools:layout="@layout/fragment_patterns" />
+        tools:layout="@layout/fragment_patterns" >
+        <action
+            android:id="@+id/action_patternsFragment_to_homepageFragment"
+            app:destination="@id/homepageFragment" />
+    </fragment>
     <fragment
         android:id="@+id/historyFragment"
         android:name="com.example.querygenie.presentation.fragments.historyFragment"

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.example.querygenie.data.DBPattern;
+import com.example.querygenie.data.model.PatternModel;
 import com.example.querygenie.domain.queryService.QueryService;
 
 import java.util.Objects;
@@ -47,6 +48,21 @@ public class Query {
 
     public void addPattern() {
         dbPattern.insert(namePattern, role, goal, environment, false);
+    }
+
+    public void installPattern(int id) {
+        PatternModel pattern = dbPattern.select(id);
+        setRole(pattern.getRole());
+        setGoal(pattern.getGoal());
+        setEnvironment(pattern.getEnvironment());
+    }
+
+    public void updatePattern(int id){
+        PatternModel pattern = dbPattern.select(id);
+        pattern.setRole(role);
+        pattern.setGoal(goal);
+        pattern.setEnvironment(environment);
+        dbPattern.update(pattern);
     }
 
     public void setNamePattern(String namePattern) {

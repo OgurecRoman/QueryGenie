@@ -29,8 +29,8 @@
 
             <ImageButton
                 android:id="@+id/favouriteBut"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:src="@drawable/heart" />
 
         </LinearLayout>
@@ -57,7 +57,7 @@
                     android:id="@+id/role"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
                     android:layout_weight="10"
                     android:fontFamily="@font/font_family"
                     android:textSize="20sp"
@@ -82,7 +82,7 @@
                     android:id="@+id/goal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
                     android:layout_weight="10"
                     android:fontFamily="@font/font_family"
                     android:textSize="20sp"
@@ -108,7 +108,7 @@
                     android:id="@+id/environment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
                     android:layout_weight="10"
                     android:fontFamily="@font/font_family"
                     android:textSize="20sp"
@@ -127,7 +127,7 @@
                 android:id="@+id/useBut"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/but_style"
                 android:fontFamily="@font/font_family"
@@ -136,14 +136,14 @@
 
             <ImageButton
                 android:id="@+id/editBut"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:src="@drawable/edit" />
 
             <ImageButton
                 android:id="@+id/deleteBut"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:src="@drawable/delete" />
 
         </LinearLayout>
