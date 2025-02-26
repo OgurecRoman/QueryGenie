@@ -1,4 +1,4 @@
-package com.example.querygenie.domain.query;
+package com.example.querygenie.domain.queryService;
 
 import android.app.Service;
 import android.content.Intent;
@@ -6,8 +6,8 @@ import android.os.IBinder;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.example.querygenie.domain.model.RequestModel;
-import com.example.querygenie.domain.model.ResponseModel;
+import com.example.querygenie.data.model.RequestModel;
+import com.example.querygenie.data.model.ResponseModel;
 
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -1,7 +1,9 @@
 package com.example.querygenie.presentation.fragments;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -9,51 +11,34 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.querygenie.R;
-import com.example.querygenie.domain.query.QueryService;
+import com.example.querygenie.domain.query.Query;
+import com.example.querygenie.domain.queryService.QueryService;
 
-import java.util.Objects;
 
 public class homepageFragment extends Fragment {
-    TextView answerView;
-    ProgressBar progressBar;
+    private Query query;
+    private TextView answerView;
+    private ProgressBar progressBar;
 
     public homepageFragment() {
-    }
-
-    public static homepageFragment newInstance() {
-        homepageFragment fragment = new homepageFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    private String patternText(String role, String goal, String environment) {
-        String text = "";
-        if (!Objects.equals(role, "")) {
-            text += "Роль: " + role;
-        }
-        if (!Objects.equals(goal, "")) {
-            text += "\nЦель: " + goal;
-        }
-        if (!Objects.equals(environment, "")) {
-            text += "\nОкружение: " + environment;
-        }
-        return text;
     }
 
     private void sendQuery(String text) {
@@ -72,6 +57,37 @@ public class homepageFragment extends Fragment {
             }
         }
     };
+
+    private void showInputDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.namePattern);
+
+        final EditText nameText = new EditText(getActivity());
+
+        FrameLayout container = new FrameLayout(getActivity());
+        container.setPadding(50, 20, 50, 20);
+        container.addView(nameText);
+
+        builder.setView(container);
+
+        builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                query.setNamePattern(nameText.getText().toString());
+                query.addPattern();
+                Toast.makeText(getActivity(), "Шаблон сохранен", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
 
     @Override
     public void onResume() {
@@ -106,16 +122,28 @@ public class homepageFragment extends Fragment {
 
         progressBar.setVisibility(View.GONE);
 
+        query = new Query(getActivity());
+
         sendBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String textQuery = editQuery.getText().toString();
-                String textPattern = patternText(editRole.getText().toString(),
-                        editGoal.getText().toString(), editEnvironment.getText().toString());
-                String text = textPattern + "\n" + textQuery;
-                sendQuery(text);
+                query.setTextQuery(editQuery.getText().toString());
+                query.setRole(editRole.getText().toString());
+                query.setGoal(editGoal.getText().toString());
+                query.setEnvironment(editEnvironment.getText().toString());
+                query.sendQuery(getActivity());
                 answerView.setText("");
                 progressBar.setVisibility(View.VISIBLE);
+            }
+        });
+
+        saveBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                query.setRole(editRole.getText().toString());
+                query.setGoal(editGoal.getText().toString());
+                query.setEnvironment(editEnvironment.getText().toString());
+                showInputDialog();
             }
         });
 

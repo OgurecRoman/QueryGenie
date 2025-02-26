@@ -3,45 +3,34 @@ package com.example.querygenie.presentation.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.querygenie.R;
+import com.example.querygenie.domain.adapter.PatternAdapter;
 
 public class patternsFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
     public patternsFragment() {
-    }
-
-    public static patternsFragment newInstance(String param1, String param2) {
-        patternsFragment fragment = new patternsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_patterns, container, false);
+        View view = inflater.inflate(R.layout.fragment_patterns, container, false);
+
+        RecyclerView recyclerView = view.findViewById(R.id.list);
+        PatternAdapter adapter = new PatternAdapter(getActivity());
+        recyclerView.setAdapter(adapter);
+
+        return view;
     }
 }

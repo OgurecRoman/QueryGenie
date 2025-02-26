@@ -32,7 +32,7 @@
             </intent-filter>
 
         </activity>
-        <service android:name=".domain.query.QueryService" />
+        <service android:name=".domain.queryService.QueryService" />
 
     </application>
 

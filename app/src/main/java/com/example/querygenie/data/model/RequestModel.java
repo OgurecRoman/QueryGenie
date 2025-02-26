@@ -1,4 +1,4 @@
-package com.example.querygenie.domain.model;
+package com.example.querygenie.data.model;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -1,7 +1,7 @@
-package com.example.querygenie.domain.query;
+package com.example.querygenie.domain.queryService;
 
-import com.example.querygenie.domain.model.RequestModel;
-import com.example.querygenie.domain.model.ResponseModel;
+import com.example.querygenie.data.model.RequestModel;
+import com.example.querygenie.data.model.ResponseModel;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
