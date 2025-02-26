@@ -2,7 +2,6 @@ package com.example.querygenie.domain.query;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.example.querygenie.data.DBPattern;
 import com.example.querygenie.data.model.PatternModel;
@@ -16,7 +15,7 @@ public class Query {
     private String goal = "";
     private String environment = "";
     private String textQuery = "";
-    private DBPattern dbPattern;
+    private final DBPattern dbPattern;
 
     public Query(Context context) {
         dbPattern = new DBPattern(context);
@@ -57,7 +56,7 @@ public class Query {
         setEnvironment(pattern.getEnvironment());
     }
 
-    public void updatePattern(int id){
+    public void updatePattern(int id) {
         PatternModel pattern = dbPattern.select(id);
         pattern.setRole(role);
         pattern.setGoal(goal);
@@ -83,10 +82,6 @@ public class Query {
 
     public void setTextQuery(String textQuery) {
         this.textQuery = textQuery;
-    }
-
-    public String getNamePattern() {
-        return namePattern;
     }
 
     public String getRole() {

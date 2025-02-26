@@ -3,7 +3,7 @@ package com.example.querygenie.data.model;
 import java.io.Serializable;
 
 public class PatternModel implements Serializable {
-    private int id;
+    private final int id;
     private String name;
     private String role;
     private String goal;

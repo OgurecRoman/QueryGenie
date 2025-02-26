@@ -98,6 +98,29 @@ public class DBPattern {
         return arr;
     }
 
+    public ArrayList<PatternModel> filterLike(String line) {
+        ArrayList<PatternModel> arr = new ArrayList<PatternModel>();
+
+        String query = "SELECT * FROM " + TABLE_PATTERNS + " WHERE " + COLUMN_NAME + " LIKE ?";
+        String[] selectionArgs = new String[]{"%" + line + "%"};
+
+        Cursor mCursor = mDataBase.rawQuery(query, selectionArgs);
+
+        mCursor.moveToFirst();
+        if (!mCursor.isAfterLast()) {
+            do {
+                int id = mCursor.getInt(NUM_COLUMN_ID);
+                String name = mCursor.getString(NUM_COLUMN_NAME);
+                String role = mCursor.getString(NUM_COLUMN_ROLE);
+                String goal = mCursor.getString(NUM_COLUMN_GOAL);
+                String environment = mCursor.getString(NUM_COLUMN_ENVIRONMENT);
+                boolean isliked = mCursor.getInt(NUM_COLUMN_ISLIKED) > 0;
+                arr.add(new PatternModel(id, name, role, goal, environment, isliked));
+            } while (mCursor.moveToNext());
+        }
+        return arr;
+    }
+
     private class OpenHelper extends SQLiteOpenHelper {
 
         OpenHelper(Context context) {

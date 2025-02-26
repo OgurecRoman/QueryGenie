@@ -18,8 +18,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
@@ -40,8 +40,8 @@
         <TableLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginTop="8dp"
+            android:layout_weight="1"
             android:background="@drawable/borders"
             android:stretchColumns="1">
 
@@ -66,9 +66,9 @@
             </TableRow>
 
             <TableRow
-                android:layout_marginBottom="8dp"
-                android:layout_marginRight="8dp"
                 android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
                 android:layout_weight="2">
 
                 <TextView
@@ -89,9 +89,8 @@
             </TableRow>
 
             <TableRow
-                android:layout_marginBottom="8dp"
-                android:layout_marginRight="8dp"
                 android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:layout_weight="2">
 
                 <TextView
@@ -112,8 +111,7 @@
 
             <LinearLayout
                 android:layout_weight="1"
-                android:gravity="center"
-                android:layout_marginBottom="8dp">
+                android:gravity="center">
 
                 <Button
                     android:id="@+id/saveBut"
@@ -173,6 +171,8 @@
                 android:id="@+id/query"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:background="none"
                 android:fontFamily="@font/font_family"
                 android:gravity="start"
                 android:hint="@string/help_text"
