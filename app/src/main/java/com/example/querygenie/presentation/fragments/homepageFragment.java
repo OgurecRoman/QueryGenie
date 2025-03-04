@@ -37,17 +37,7 @@ public class homepageFragment extends Fragment {
     private int mPatternId;
     private boolean mIsEdit;
 
-    public homepageFragment() {
-    }
-
-    public static historyFragment newInstance(String param1, String param2) {
-        historyFragment fragment = new historyFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PATTERN, param1);
-        args.putString(ARG_EDIT, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    public homepageFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

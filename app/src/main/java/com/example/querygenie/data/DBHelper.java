@@ -5,12 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.querygenie.data.model.PatternModel;
 import com.example.querygenie.data.model.QueryModel;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class DBHelper {
     private static final String DATABASE_NAME = "querygenie.db";
@@ -26,17 +26,19 @@ public class DBHelper {
     private static final String COLUMN_QUERY = "QueryText";
     private static final String COLUMN_ANSWER = "Answer";
     private static final String COLUMN_DATE = "Date";
+    private static final String COLUMN_COUNT = "Count";
     private static final String COLUMN_ISLIKED = "Isliked";
 
     private static final int NUM_COLUMN_ID = 0;
-    private static final int NUM_COLUMN_NAME = 1;
-    private static final int NUM_COLUMN_ROLE = 2;
-    private static final int NUM_COLUMN_GOAL = 3;
-    private static final int NUM_COLUMN_ENVIRONMENT = 4;
-    private static final int NUM_COLUMN_ISLIKED = 5;
-    private static final int NUM_COLUMN_QUERY = 6;
-    private static final int NUM_COLUMN_ANSWER = 7;
-    private static final int NUM_COLUMN_DATE = 8;
+    private static final int NUM_COLUMN_ROLE = 1;
+    private static final int NUM_COLUMN_GOAL = 2;
+    private static final int NUM_COLUMN_ENVIRONMENT = 3;
+    private static final int NUM_COLUMN_ISLIKED = 4;
+    private static final int NUM_COLUMN_NAME = 5;
+    private static final int NUM_COLUMN_QUERY = 5;
+    private static final int NUM_COLUMN_ANSWER = 6;
+    private static final int NUM_COLUMN_DATE = 7;
+    private static final int NUM_COLUMN_COUNT = 8;
 
 
     private SQLiteDatabase mDataBase;
@@ -131,7 +133,7 @@ public class DBHelper {
     }
 
     public long insertQuery(String role, String goal, String environment, String query,
-                            String answer, String date, boolean isliked) {
+                            String answer, String date, int count, boolean isliked) {
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_ROLE, role);
         cv.put(COLUMN_GOAL, goal);
@@ -140,6 +142,7 @@ public class DBHelper {
         cv.put(COLUMN_ANSWER, answer);
         cv.put(COLUMN_ISLIKED, isliked);
         cv.put(COLUMN_DATE, date);
+        cv.put(COLUMN_COUNT, count);
         return mDataBase.insert(TABLE_HISTORY, null, cv);
     }
 
@@ -151,6 +154,7 @@ public class DBHelper {
         cv.put(COLUMN_QUERY, md.getQuery());
         cv.put(COLUMN_ANSWER, md.getAnswer());
         cv.put(COLUMN_DATE, md.getDate());
+        cv.put(COLUMN_COUNT, md.getCount());
         cv.put(COLUMN_ISLIKED, md.getIsliked());
         return mDataBase.update(TABLE_HISTORY, cv, COLUMN_ID + " = ?",
                 new String[]{String.valueOf(md.getId())});
@@ -175,15 +179,16 @@ public class DBHelper {
         String query = mCursor.getString(NUM_COLUMN_QUERY);
         String answer = mCursor.getString(NUM_COLUMN_ANSWER);
         String date = mCursor.getString(NUM_COLUMN_DATE);
+        int count = mCursor.getInt(NUM_COLUMN_COUNT);
         boolean isliked = mCursor.getInt(NUM_COLUMN_ISLIKED) > 0;
-        return new QueryModel(id, role, goal, environment, query, date, answer, isliked);
+        return new QueryModel(id, role, goal, environment, query, date, answer, count, isliked);
     }
 
     public ArrayList<QueryModel> selectAllHistory() {
         Cursor mCursor = mDataBase.query(TABLE_HISTORY, null, null,
                 null, null, null, null);
 
-        ArrayList<QueryModel> arr = new ArrayList<QueryModel>();
+        ArrayList<QueryModel> arr = new ArrayList<>();
         mCursor.moveToFirst();
         if (!mCursor.isAfterLast()) {
             do {
@@ -194,10 +199,17 @@ public class DBHelper {
                 String query = mCursor.getString(NUM_COLUMN_QUERY);
                 String answer = mCursor.getString(NUM_COLUMN_ANSWER);
                 String date = mCursor.getString(NUM_COLUMN_DATE);
+                int count = mCursor.getInt(NUM_COLUMN_COUNT);
                 boolean isliked = mCursor.getInt(NUM_COLUMN_ISLIKED) > 0;
-                arr.add(new QueryModel(id, role, goal, environment, query, date, answer, isliked));
+                arr.add(new QueryModel(id, role, goal, environment, query, date, answer, count, isliked));
             } while (mCursor.moveToNext());
         }
+        return arr;
+    }
+
+    public ArrayList<QueryModel> filterLikeHistory() {
+        ArrayList<QueryModel> arr = new ArrayList<QueryModel>();
+
         return arr;
     }
 
@@ -211,23 +223,23 @@ public class DBHelper {
         public void onCreate(SQLiteDatabase db) {
             String queryPat = "CREATE TABLE " + TABLE_PATTERNS + " (" +
                     COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    COLUMN_NAME + " TEXT, " +
                     COLUMN_ROLE + " TEXT, " +
                     COLUMN_GOAL + " TEXT," +
                     COLUMN_ENVIRONMENT + " TEXT," +
-                    COLUMN_ISLIKED + " BOOLEAN);";
+                    COLUMN_ISLIKED + " BOOLEAN," +
+                    COLUMN_NAME + " TEXT);";
             db.execSQL(queryPat);
 
             String queryQuery = "CREATE TABLE " + TABLE_HISTORY + " (" +
                     COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    COLUMN_NAME + " TEXT, " +
                     COLUMN_ROLE + " TEXT, " +
                     COLUMN_GOAL + " TEXT," +
                     COLUMN_ENVIRONMENT + " TEXT," +
+                    COLUMN_ISLIKED + " BOOLEAN," +
                     COLUMN_QUERY + " TEXT," +
                     COLUMN_ANSWER + " TEXT," +
                     COLUMN_DATE + " DATE," +
-                    COLUMN_ISLIKED + " BOOLEAN);";
+                    COLUMN_COUNT + " INT);";
             db.execSQL(queryQuery);
         }
 

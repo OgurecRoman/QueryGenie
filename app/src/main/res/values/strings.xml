@@ -8,6 +8,8 @@
     <string name="help_text">Начните печатать…</string>
     <string name="query_head">Введите ваш запрос</string>
     <string name="send">Отправить</string>
+    <string name="count">Использований</string>
+    <string name="date">Дата</string>
     <string name="answer">Ответ</string>
     <string name="role">Роль</string>
     <string name="goal">Цель</string>
@@ -18,6 +20,7 @@
     <string name="save_changes">Сохранить изменения</string>
     <string name="not_found">Ничего не найдено :(</string>
     <string name="cancel">Отмена</string>
+    <string name="back">Назад</string>
     <string name="search">Поиск</string>
     <string name="all">Все</string>
     <string name="favourite">Избранное</string>

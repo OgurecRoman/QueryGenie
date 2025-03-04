@@ -1,6 +1,9 @@
 package com.example.querygenie.domain.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.querygenie.R;
@@ -40,9 +44,33 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         boolean isliked = queryModel.getIsliked();
         holder.query_text.setText(queryModel.getQuery());
         holder.date_text.setText(queryModel.getDate());
+        holder.count_text.setText(String.valueOf(queryModel.getCount()));
         if (isliked) {
             holder.favourite_but.setImageResource(R.drawable.heartactive);
         }
+
+        holder.itemView.setOnClickListener(view -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("QueryID", items.get(position).getId());
+
+            Navigation.findNavController(view)
+                    .navigate(R.id.action_historyFragment_to_itemQueryFragment, bundle);
+        });
+
+        holder.favourite_but.setOnClickListener(view -> {
+            queryModel.setIsliked(!queryModel.getIsliked());
+            dbPattern.updateQuery(queryModel);
+            if (queryModel.getIsliked())
+                holder.favourite_but.setImageResource(R.drawable.heartactive);
+            else holder.favourite_but.setImageResource(R.drawable.heart);
+        });
+
+        holder.delete_but.setOnClickListener(view -> {
+            dbPattern.deleteQuery(items.get(position).getId());
+            items.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, items.size());
+        });
     }
 
     @Override
@@ -52,6 +80,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         final TextView query_text;
+        final TextView count_text;
         final TextView date_text;
         final ImageButton favourite_but;
         final Button use_but;
@@ -60,6 +89,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         ViewHolder(View view) {
             super(view);
             query_text = view.findViewById(R.id.textQuery);
+            count_text = view.findViewById(R.id.count);
             date_text = view.findViewById(R.id.date);
             favourite_but = view.findViewById(R.id.favouriteBut);
             use_but = view.findViewById(R.id.useBut);

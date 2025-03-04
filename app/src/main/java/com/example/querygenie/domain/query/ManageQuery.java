@@ -9,7 +9,8 @@ import com.example.querygenie.data.model.QueryModel;
 import com.example.querygenie.domain.queryService.QueryService;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.Objects;
 
 public class ManageQuery {
@@ -19,7 +20,7 @@ public class ManageQuery {
     private String environment = "";
     private String textQuery = "";
     private String textAnswer = "";
-    private Date date;
+    private LocalDateTime date;
     private final DBHelper dataBase;
 
     public ManageQuery(Context context) {
@@ -70,15 +71,28 @@ public class ManageQuery {
     }
 
     public void addQuery() {
+        date = LocalDateTime.now();
+        DateTimeFormatter customFormatter = new DateTimeFormatterBuilder()
+                .appendPattern("dd/MM/yyyy HH:mm:ss")
+                .toFormatter();
         dataBase.insertQuery(role, goal, environment, textQuery, textAnswer,
-                "" + date.getDate() + date.getTime(), false);
+                date.format(customFormatter), 1, false);
+    }
+
+    public void selectQuery(int id){
+        QueryModel queryModel = dataBase.selectQuery(id);
+        this.role = queryModel.getRole();
+        this.goal = queryModel.getGoal();
+        this.environment = queryModel.getEnvironment();
+        this.textQuery = queryModel.getQuery();
+        this.textAnswer = queryModel.getAnswer();
     }
 
     public void setTextAnswer(String textAnswer) {
         this.textAnswer = textAnswer;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
@@ -118,7 +132,7 @@ public class ManageQuery {
         return textAnswer;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 

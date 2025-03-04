@@ -35,5 +35,9 @@
         android:id="@+id/itemQueryFragment"
         android:name="com.example.querygenie.presentation.fragments.itemQueryFragment"
         android:label="fragment_item_query"
-        tools:layout="@layout/fragment_item_query" />
+        tools:layout="@layout/fragment_item_query" >
+        <action
+            android:id="@+id/action_itemQueryFragment_to_historyFragment"
+            app:destination="@id/historyFragment" />
+    </fragment>
 </navigation>

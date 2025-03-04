@@ -11,10 +11,11 @@ public class QueryModel implements Serializable {
     private String query;
     private String answer;
     private String date;
+    private int count;
     private boolean isliked;
 
     public QueryModel(int id, String role, String goal, String environment, String query,
-                      String date, String answer, boolean isliked) {
+                      String date, String answer, int count, boolean isliked) {
         this.id = id;
         this.role = role;
         this.goal = goal;
@@ -22,6 +23,7 @@ public class QueryModel implements Serializable {
         this.query = query;
         this.answer = answer;
         this.date = date;
+        this.count = count;
         this.isliked = isliked;
     }
 
@@ -53,6 +55,10 @@ public class QueryModel implements Serializable {
         return date;
     }
 
+    public int getCount() {
+        return count;
+    }
+
     public boolean getIsliked() {
         return isliked;
     }
@@ -79,6 +85,10 @@ public class QueryModel implements Serializable {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 
     public void setIsliked(boolean isliked) {
