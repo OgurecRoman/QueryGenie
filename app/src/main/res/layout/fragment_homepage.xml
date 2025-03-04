@@ -172,7 +172,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
-                android:background="none"
                 android:fontFamily="@font/font_family"
                 android:gravity="start"
                 android:hint="@string/help_text"

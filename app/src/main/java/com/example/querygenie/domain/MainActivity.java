@@ -22,10 +22,10 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView nav_view = findViewById(R.id.nav_view);
         NavController navController = Navigation.findNavController(this, R.id.my_nav_graph);
-        AppBarConfiguration appBarConfiguration =
-                new AppBarConfiguration.Builder(navController.getGraph())
-                        .build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+//        AppBarConfiguration appBarConfiguration =
+//                new AppBarConfiguration.Builder(navController.getGraph())
+//                        .build();
+        //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(nav_view, navController);
     }
 

@@ -39,6 +39,7 @@
         </LinearLayout>
 
         <ImageButton
+            android:id="@+id/filter"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/filter"/>

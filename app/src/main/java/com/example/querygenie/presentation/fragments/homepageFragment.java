@@ -11,7 +11,6 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,13 +23,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.querygenie.R;
-import com.example.querygenie.data.model.PatternModel;
-import com.example.querygenie.domain.query.Query;
-import com.example.querygenie.domain.queryService.QueryService;
+import com.example.querygenie.domain.query.ManageQuery;
 
 
 public class homepageFragment extends Fragment {
-    private Query query;
+    private ManageQuery query;
     private TextView answerView;
     private ProgressBar progressBar;
 
@@ -61,18 +58,14 @@ public class homepageFragment extends Fragment {
         }
     }
 
-    private void sendQuery(String text) {
-        Intent intent = new Intent(getActivity(), QueryService.class);
-        intent.putExtra("query", text);
-        requireActivity().startService(intent);
-    }
-
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if ("RESPONSE".equals(intent.getAction())) {
                 progressBar.setVisibility(View.GONE);
                 String response = intent.getStringExtra("response");
+                query.setTextAnswer(response);
+                query.addQuery();
                 answerView.setText(response);
             }
         }
@@ -142,7 +135,7 @@ public class homepageFragment extends Fragment {
 
         progressBar.setVisibility(View.GONE);
 
-        query = new Query(getActivity());
+        query = new ManageQuery(getActivity());
 
         if (mPatternId > 0){
             query.installPattern(mPatternId);

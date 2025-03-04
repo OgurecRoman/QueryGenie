@@ -23,5 +23,17 @@
         android:id="@+id/historyFragment"
         android:name="com.example.querygenie.presentation.fragments.historyFragment"
         android:label="История"
-        tools:layout="@layout/fragment_history" />
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/action_historyFragment_to_homepageFragment"
+            app:destination="@id/homepageFragment" />
+        <action
+            android:id="@+id/action_historyFragment_to_itemQueryFragment"
+            app:destination="@id/itemQueryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/itemQueryFragment"
+        android:name="com.example.querygenie.presentation.fragments.itemQueryFragment"
+        android:label="fragment_item_query"
+        tools:layout="@layout/fragment_item_query" />
 </navigation>

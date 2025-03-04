@@ -14,20 +14,20 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.querygenie.R;
-import com.example.querygenie.data.DBPattern;
+import com.example.querygenie.data.DBHelper;
 import com.example.querygenie.data.model.PatternModel;
 
 import java.util.ArrayList;
 
 public class PatternAdapter extends RecyclerView.Adapter<PatternAdapter.ViewHolder> {
     private final LayoutInflater inflater;
-    private final DBPattern dbPattern;
+    private final DBHelper dbPattern;
     private final ArrayList<PatternModel> items;
 
     public PatternAdapter(Context context, String line) {
-        this.dbPattern = new DBPattern(context);
+        this.dbPattern = new DBHelper(context);
         this.inflater = LayoutInflater.from(context);
-        items = dbPattern.filterLike(line);
+        items = dbPattern.filterLikePatterns(line);
     }
 
     @Override
@@ -50,14 +50,14 @@ public class PatternAdapter extends RecyclerView.Adapter<PatternAdapter.ViewHold
 
         holder.favourite_but.setOnClickListener(view -> {
             patternModel.setIsliked(!patternModel.getIsliked());
-            dbPattern.update(patternModel);
+            dbPattern.updatePattern(patternModel);
             if (patternModel.getIsliked())
                 holder.favourite_but.setImageResource(R.drawable.heartactive);
             else holder.favourite_but.setImageResource(R.drawable.heart);
         });
 
         holder.delete_but.setOnClickListener(view -> {
-            dbPattern.delete(items.get(position).getId());
+            dbPattern.deletePattern(items.get(position).getId());
             items.remove(position);
             notifyItemRemoved(position);
             notifyItemRangeChanged(position, items.size());

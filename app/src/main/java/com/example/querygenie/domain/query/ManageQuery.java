@@ -3,22 +3,27 @@ package com.example.querygenie.domain.query;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.querygenie.data.DBPattern;
+import com.example.querygenie.data.DBHelper;
 import com.example.querygenie.data.model.PatternModel;
+import com.example.querygenie.data.model.QueryModel;
 import com.example.querygenie.domain.queryService.QueryService;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 
-public class Query {
+public class ManageQuery {
     private String namePattern = "";
     private String role = "";
     private String goal = "";
     private String environment = "";
     private String textQuery = "";
-    private final DBPattern dbPattern;
+    private String textAnswer = "";
+    private Date date;
+    private final DBHelper dataBase;
 
-    public Query(Context context) {
-        dbPattern = new DBPattern(context);
+    public ManageQuery(Context context) {
+        dataBase = new DBHelper(context);
     }
 
     private String patternText() {
@@ -46,22 +51,35 @@ public class Query {
     }
 
     public void addPattern() {
-        dbPattern.insert(namePattern, role, goal, environment, false);
+        dataBase.insertPattern(namePattern, role, goal, environment, false);
     }
 
     public void installPattern(int id) {
-        PatternModel pattern = dbPattern.select(id);
+        PatternModel pattern = dataBase.selectPattern(id);
         setRole(pattern.getRole());
         setGoal(pattern.getGoal());
         setEnvironment(pattern.getEnvironment());
     }
 
     public void updatePattern(int id) {
-        PatternModel pattern = dbPattern.select(id);
+        PatternModel pattern = dataBase.selectPattern(id);
         pattern.setRole(role);
         pattern.setGoal(goal);
         pattern.setEnvironment(environment);
-        dbPattern.update(pattern);
+        dataBase.updatePattern(pattern);
+    }
+
+    public void addQuery() {
+        dataBase.insertQuery(role, goal, environment, textQuery, textAnswer,
+                "" + date.getDate() + date.getTime(), false);
+    }
+
+    public void setTextAnswer(String textAnswer) {
+        this.textAnswer = textAnswer;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public void setNamePattern(String namePattern) {
@@ -94,6 +112,14 @@ public class Query {
 
     public String getEnvironment() {
         return environment;
+    }
+
+    public String getTextAnswer() {
+        return textAnswer;
+    }
+
+    public Date getDate() {
+        return date;
     }
 
     public String getTextQuery() {
