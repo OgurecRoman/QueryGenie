@@ -1,7 +1,6 @@
 package com.example.querygenie.presentation.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +35,6 @@ public class ListFragment extends Fragment {
 
     public void refreshAdapter() {
         if (adapter != null) {
-            Log.d("AAA", "RELOAD AAAAAAAA " + isFav);
             adapter.reloadData(isFav, "");
         }
     }
@@ -68,7 +66,12 @@ public class ListFragment extends Fragment {
             @Override
             public void onChanged(String searchQuery) {
                 if (adapter != null) {
+                    int count = adapter.getItemCount();
                     adapter.reloadData(isFav, searchQuery);
+                    if (adapter.getItemCount() == 0 && count != 0)
+                        messageText.setVisibility(View.VISIBLE);
+                    else
+                        messageText.setVisibility(View.GONE);
                 }
             }
         });

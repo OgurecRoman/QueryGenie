@@ -2,7 +2,6 @@ package com.example.querygenie.domain.adapter;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +34,6 @@ public class PatternAdapter extends RecyclerView.Adapter<PatternAdapter.ViewHold
     public void reloadData(boolean isFav, String searchQuery) {
         this.isFav = isFav;
         items = dbPattern.filterLikePatterns(isFav, searchQuery);
-        Log.d("aaa", "мы перезагружаем данные " + items.size());
         notifyDataSetChanged();
     }
 

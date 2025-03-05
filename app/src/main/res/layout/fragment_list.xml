@@ -16,8 +16,8 @@
         android:fontFamily="@font/font_family"
         android:gravity="center"
         android:text="@string/not_found"
-        android:visibility="gone"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
