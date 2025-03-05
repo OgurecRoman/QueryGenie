@@ -14,8 +14,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.example.querygenie.R;
-import com.example.querygenie.data.model.SharedViewModel;
-import com.example.querygenie.domain.adapter.ViewPagerPatternsAdapter;
+import com.example.querygenie.presentation.viewmodel.SharedViewModel;
+import com.example.querygenie.domain.adapter.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -43,9 +43,10 @@ public class PatternsFragment extends Fragment {
         ViewPager2 viewPager = view.findViewById(R.id.viewPager);
 
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        sharedViewModel.setHistory(false);
 
         List<Integer> tabTitles = Arrays.asList(R.string.all, R.string.favourite);
-        ViewPagerPatternsAdapter pagerAdapter = new ViewPagerPatternsAdapter(
+        ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(
                 getChildFragmentManager(), getLifecycle());
         viewPager.setAdapter(pagerAdapter);
 

@@ -13,13 +13,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.querygenie.R;
-import com.example.querygenie.data.model.SharedViewModel;
+import com.example.querygenie.presentation.viewmodel.SharedViewModel;
+import com.example.querygenie.domain.adapter.BaseAdapterInterface;
+import com.example.querygenie.domain.adapter.HistoryAdapter;
 import com.example.querygenie.domain.adapter.PatternAdapter;
 
 public class ListFragment extends Fragment {
-    private boolean isFav;
-    private PatternAdapter adapter;
+    private BaseAdapterInterface adapter;
     private SharedViewModel sharedViewModel;
+    private boolean isFav;
 
     public ListFragment() {
     }
@@ -57,18 +59,22 @@ public class ListFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        adapter = new PatternAdapter(requireContext(), isFav, "");
-        recyclerView.setAdapter(adapter);
-
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+
+        if (sharedViewModel.isHistory()) {
+            adapter = new HistoryAdapter(requireContext(), isFav, "");
+        } else {
+            adapter = new PatternAdapter(requireContext(), isFav, "");
+        }
+
+        recyclerView.setAdapter((RecyclerView.Adapter<?>) adapter);
 
         sharedViewModel.getSearchQuery().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String searchQuery) {
                 if (adapter != null) {
-                    int count = adapter.getItemCount();
                     adapter.reloadData(isFav, searchQuery);
-                    if (adapter.getItemCount() == 0 && count != 0)
+                    if (((RecyclerView.Adapter<?>) adapter).getItemCount() == 0)
                         messageText.setVisibility(View.VISIBLE);
                     else
                         messageText.setVisibility(View.GONE);

@@ -48,6 +48,16 @@ public class DBHelper {
         mDataBase = mOpenHelper.getWritableDatabase();
     }
 
+    private PatternModel getPatternModel(Cursor mCursor) {
+        int id = mCursor.getInt(NUM_COLUMN_ID);
+        String name = mCursor.getString(NUM_COLUMN_NAME);
+        String role = mCursor.getString(NUM_COLUMN_ROLE);
+        String goal = mCursor.getString(NUM_COLUMN_GOAL);
+        String environment = mCursor.getString(NUM_COLUMN_ENVIRONMENT);
+        boolean isliked = mCursor.getInt(NUM_COLUMN_ISLIKED) > 0;
+        return new PatternModel(id, name, role, goal, environment, isliked);
+    }
+
     public long insertPattern(String name, String role, String goal, String environment, boolean isliked) {
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_NAME, name);
@@ -97,13 +107,7 @@ public class DBHelper {
         mCursor.moveToFirst();
         if (!mCursor.isAfterLast()) {
             do {
-                int id = mCursor.getInt(NUM_COLUMN_ID);
-                String name = mCursor.getString(NUM_COLUMN_NAME);
-                String role = mCursor.getString(NUM_COLUMN_ROLE);
-                String goal = mCursor.getString(NUM_COLUMN_GOAL);
-                String environment = mCursor.getString(NUM_COLUMN_ENVIRONMENT);
-                boolean isliked = mCursor.getInt(NUM_COLUMN_ISLIKED) > 0;
-                arr.add(new PatternModel(id, name, role, goal, environment, isliked));
+                arr.add(getPatternModel(mCursor));
             } while (mCursor.moveToNext());
         }
         return arr;
@@ -120,14 +124,7 @@ public class DBHelper {
         mCursor.moveToFirst();
         if (!mCursor.isAfterLast()) {
             do {
-                int id = mCursor.getInt(NUM_COLUMN_ID);
-                String name = mCursor.getString(NUM_COLUMN_NAME);
-                String role = mCursor.getString(NUM_COLUMN_ROLE);
-                String goal = mCursor.getString(NUM_COLUMN_GOAL);
-                String environment = mCursor.getString(NUM_COLUMN_ENVIRONMENT);
-                boolean isliked = mCursor.getInt(NUM_COLUMN_ISLIKED) > 0;
-                Log.d("aaa", "abobd " + name + " " + role + " " + isliked);
-                arr.add(new PatternModel(id, name, role, goal, environment, isliked));
+                arr.add(getPatternModel(mCursor));
             } while (mCursor.moveToNext());
         }
         return arr;
@@ -138,7 +135,7 @@ public class DBHelper {
 
         String query = "SELECT * FROM " + TABLE_PATTERNS + " WHERE " + COLUMN_NAME + " LIKE ?";
 
-        if (isFav){
+        if (isFav) {
             query += " AND " + COLUMN_ISLIKED + " = 1";
         }
 
@@ -159,6 +156,19 @@ public class DBHelper {
             } while (mCursor.moveToNext());
         }
         return arr;
+    }
+
+    private QueryModel getQueryModel(Cursor mCursor) {
+        int id = mCursor.getInt(NUM_COLUMN_ID);
+        String role = mCursor.getString(NUM_COLUMN_ROLE);
+        String goal = mCursor.getString(NUM_COLUMN_GOAL);
+        String environment = mCursor.getString(NUM_COLUMN_ENVIRONMENT);
+        String query = mCursor.getString(NUM_COLUMN_QUERY);
+        String answer = mCursor.getString(NUM_COLUMN_ANSWER);
+        String date = mCursor.getString(NUM_COLUMN_DATE);
+        int count = mCursor.getInt(NUM_COLUMN_COUNT);
+        boolean isliked = mCursor.getInt(NUM_COLUMN_ISLIKED) > 0;
+        return new QueryModel(id, role, goal, environment, query, date, answer, count, isliked);
     }
 
     public long insertQuery(String role, String goal, String environment, String query,
@@ -221,24 +231,30 @@ public class DBHelper {
         mCursor.moveToFirst();
         if (!mCursor.isAfterLast()) {
             do {
-                int id = mCursor.getInt(NUM_COLUMN_ID);
-                String role = mCursor.getString(NUM_COLUMN_ROLE);
-                String goal = mCursor.getString(NUM_COLUMN_GOAL);
-                String environment = mCursor.getString(NUM_COLUMN_ENVIRONMENT);
-                String query = mCursor.getString(NUM_COLUMN_QUERY);
-                String answer = mCursor.getString(NUM_COLUMN_ANSWER);
-                String date = mCursor.getString(NUM_COLUMN_DATE);
-                int count = mCursor.getInt(NUM_COLUMN_COUNT);
-                boolean isliked = mCursor.getInt(NUM_COLUMN_ISLIKED) > 0;
-                arr.add(new QueryModel(id, role, goal, environment, query, date, answer, count, isliked));
+                arr.add(getQueryModel(mCursor));
             } while (mCursor.moveToNext());
         }
         return arr;
     }
 
-    public ArrayList<QueryModel> filterLikeHistory() {
-        ArrayList<QueryModel> arr = new ArrayList<QueryModel>();
+    public ArrayList<QueryModel> filterLikeHistory(boolean isFav, String line) {
+        ArrayList<QueryModel> arr = new ArrayList<>();
 
+        String query = "SELECT * FROM " + TABLE_HISTORY + " WHERE " + COLUMN_QUERY + " LIKE ?";
+
+        if (isFav) {
+            query += " AND " + COLUMN_ISLIKED + " = 1";
+        }
+
+        String[] selectionArgs = new String[]{"%" + line + "%"};
+
+        Cursor mCursor = mDataBase.rawQuery(query, selectionArgs);
+        mCursor.moveToFirst();
+        if (!mCursor.isAfterLast()) {
+            do {
+                arr.add(getQueryModel(mCursor));
+            } while (mCursor.moveToNext());
+        }
         return arr;
     }
 

@@ -19,7 +19,7 @@ import com.example.querygenie.data.model.PatternModel;
 
 import java.util.ArrayList;
 
-public class PatternAdapter extends RecyclerView.Adapter<PatternAdapter.ViewHolder> {
+public class PatternAdapter extends RecyclerView.Adapter<PatternAdapter.ViewHolder> implements BaseAdapterInterface {
     private final LayoutInflater inflater;
     private final DBHelper dbPattern;
     private boolean isFav;

@@ -3,7 +3,8 @@ package com.example.querygenie.presentation.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,12 +13,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import com.example.querygenie.R;
-import com.example.querygenie.domain.adapter.HistoryAdapter;
+import com.example.querygenie.presentation.viewmodel.SharedViewModel;
+import com.example.querygenie.domain.adapter.ViewPagerAdapter;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class HistoryFragment extends Fragment {
+    private SharedViewModel sharedViewModel;
 
     public HistoryFragment() {}
 
@@ -32,13 +39,36 @@ public class HistoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_history, container, false);
 
         EditText searchText = view.findViewById(R.id.search);
-        TextView messageText = view.findViewById(R.id.message);
-
         ImageButton filterBut = view.findViewById(R.id.filter);
 
-        RecyclerView recyclerView = view.findViewById(R.id.list);
-        HistoryAdapter adapter = new HistoryAdapter(getActivity(), searchText.getText().toString());
-        recyclerView.setAdapter(adapter);
+        TabLayout tabLayout = view.findViewById(R.id.tabLayout);
+        ViewPager2 viewPager = view.findViewById(R.id.viewPager);
+
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        sharedViewModel.setHistory(true);
+
+        List<Integer> tabTitles = Arrays.asList(R.string.all, R.string.favourite);
+        ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(
+                getChildFragmentManager(), getLifecycle());
+        viewPager.setAdapter(pagerAdapter);
+
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) ->
+                tab.setText(tabTitles.get(position))
+        ).attach();
+
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+
+                searchText.setText("");
+
+                ListFragment fragment = pagerAdapter.getFragment(position);
+                if (fragment != null) {
+                    fragment.refreshAdapter();
+                }
+            }
+        });
 
         searchText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -47,12 +77,7 @@ public class HistoryFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                HistoryAdapter adapter = new HistoryAdapter(getActivity(), searchText.getText().toString());
-                recyclerView.setAdapter(adapter);
-                if (adapter.getItemCount() == 0)
-                    messageText.setVisibility(View.VISIBLE);
-                else
-                    messageText.setVisibility(View.GONE);
+                sharedViewModel.setSearchQuery(charSequence.toString());
             }
 
             @Override

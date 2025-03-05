@@ -8,14 +8,10 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.querygenie.presentation.fragments.ListFragment;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class ViewPagerPatternsAdapter extends FragmentStateAdapter {
-    private final Map<Integer, ListFragment> fragmentMap = new HashMap<>();
+public class ViewPagerAdapter extends FragmentStateAdapter {
     private final FragmentManager fragmentManager;
 
-    public ViewPagerPatternsAdapter(FragmentManager fm, Lifecycle lifecycle) {
+    public ViewPagerAdapter(FragmentManager fm, Lifecycle lifecycle) {
         super(fm, lifecycle);
         this.fragmentManager = fm;
     }
