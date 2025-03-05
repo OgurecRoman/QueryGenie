@@ -25,10 +25,7 @@ public class ViewPagerPatternsAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        Log.d("f", "мы тут появились " + position);
-        ListFragment fragment = new ListFragment(position == 1);
-        fragmentMap.put(position, fragment);
-        return fragment;
+        return ListFragment.newInstance(position);
     }
 
     @Override

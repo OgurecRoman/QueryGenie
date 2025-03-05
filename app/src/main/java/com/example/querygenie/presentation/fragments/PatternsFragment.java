@@ -46,7 +46,8 @@ public class PatternsFragment extends Fragment {
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
         List<Integer> tabTitles = Arrays.asList(R.string.all, R.string.favourite);
-        ViewPagerPatternsAdapter pagerAdapter = new ViewPagerPatternsAdapter(getChildFragmentManager(), getLifecycle());
+        ViewPagerPatternsAdapter pagerAdapter = new ViewPagerPatternsAdapter(
+                getChildFragmentManager(), getLifecycle());
         viewPager.setAdapter(pagerAdapter);
 
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) ->
@@ -58,11 +59,11 @@ public class PatternsFragment extends Fragment {
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
 
+                searchText.setText("");
+
                 ListFragment fragment = pagerAdapter.getFragment(position);
-                Log.d("aaa", "я тут " + position + " " + fragment);
                 if (fragment != null) {
-                    Log.d("aaa", "делаем делаем " + position);
-                    fragment.refreshAdapter(position == 1);
+                    fragment.refreshAdapter();
                 }
             }
         });
