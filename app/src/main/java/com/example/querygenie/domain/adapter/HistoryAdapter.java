@@ -1,9 +1,7 @@
 package com.example.querygenie.domain.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.querygenie.R;
 import com.example.querygenie.data.DBHelper;
 import com.example.querygenie.data.model.QueryModel;
+import com.example.querygenie.presentation.viewmodel.SharedViewModel;
 
 import java.util.ArrayList;
 
@@ -27,15 +26,16 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     private boolean isFav;
     private ArrayList<QueryModel> items;
 
-    public HistoryAdapter(Context context, boolean isFav, String searchQuery) {
+    public HistoryAdapter(Context context, boolean isFav, SharedViewModel sharedViewModel) {
         this.dbPattern = new DBHelper(context);
         this.inflater = LayoutInflater.from(context);
-        reloadData(isFav, searchQuery);
+        reloadData(isFav, sharedViewModel);
     }
 
-    public void reloadData(boolean isFav, String searchQuery) {
+    public void reloadData(boolean isFav, SharedViewModel sharedViewModel) {
         this.isFav = isFav;
-        items = dbPattern.filterLikeHistory(isFav, searchQuery);
+        items = dbPattern.filterLikeHistory(isFav, sharedViewModel.getSearchText(),
+                sharedViewModel.getSelectedSort());
         notifyDataSetChanged();
     }
 

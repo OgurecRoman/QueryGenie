@@ -26,5 +26,8 @@
     <string name="favourite">Избранное</string>
     <string name="namePattern">Название шаблона</string>
     <string name="savePattern">Шаблон сохранен</string>
+    <string name="sort_date">По дате</string>
+    <string name="sort_popular">По популярности</string>
+    <string name="sort_clean">Сбросить фильтр</string>
 
 </resources>

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 
 import com.example.querygenie.R;
 import com.example.querygenie.presentation.viewmodel.SharedViewModel;
@@ -25,8 +26,39 @@ import java.util.List;
 
 public class HistoryFragment extends Fragment {
     private SharedViewModel sharedViewModel;
+    private ViewPagerAdapter pagerAdapter;
 
-    public HistoryFragment() {}
+    public HistoryFragment() {
+    }
+
+    private void showMenu(ImageButton view) {
+        PopupMenu popupMenu = new PopupMenu(getActivity(), view);
+        popupMenu.getMenuInflater().inflate(R.menu.menu_sort, popupMenu.getMenu());
+
+        popupMenu.setOnMenuItemClickListener(item -> {
+            String selectedSort = "Сбросить";
+
+            if (item.getItemId() == R.id.sort_date) {
+                selectedSort = "Дата";
+            } else if (item.getItemId() == R.id.sort_popularity) {
+                selectedSort = "Популярность";
+            } else if (item.getItemId() == R.id.sort_clean) {
+                selectedSort = "Сбросить";
+            } else {
+                return false;
+            }
+
+            if (!selectedSort.equals("Сбросить"))
+                view.setImageResource(R.drawable.filteractive);
+            else
+                view.setImageResource(R.drawable.filter);
+
+            sharedViewModel.setSort(selectedSort);
+
+            return true;
+        });
+        popupMenu.show();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,17 +70,21 @@ public class HistoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_history, container, false);
 
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        sharedViewModel.setHistory(true);
+
         EditText searchText = view.findViewById(R.id.search);
         ImageButton filterBut = view.findViewById(R.id.filter);
+        if (sharedViewModel.getSelectedSort() == 0)
+            filterBut.setImageResource(R.drawable.filter);
+        else
+            filterBut.setImageResource(R.drawable.filteractive);
 
         TabLayout tabLayout = view.findViewById(R.id.tabLayout);
         ViewPager2 viewPager = view.findViewById(R.id.viewPager);
 
-        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-        sharedViewModel.setHistory(true);
-
         List<Integer> tabTitles = Arrays.asList(R.string.all, R.string.favourite);
-        ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(
+        pagerAdapter = new ViewPagerAdapter(
                 getChildFragmentManager(), getLifecycle());
         viewPager.setAdapter(pagerAdapter);
 
@@ -68,6 +104,10 @@ public class HistoryFragment extends Fragment {
                     fragment.refreshAdapter();
                 }
             }
+        });
+
+        filterBut.setOnClickListener(view1 -> {
+            showMenu(filterBut);
         });
 
         searchText.addTextChangedListener(new TextWatcher() {

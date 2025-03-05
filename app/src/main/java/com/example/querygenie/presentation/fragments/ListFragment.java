@@ -1,6 +1,7 @@
 package com.example.querygenie.presentation.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,10 +35,9 @@ public class ListFragment extends Fragment {
         return fragment;
     }
 
-
     public void refreshAdapter() {
         if (adapter != null) {
-            adapter.reloadData(isFav, "");
+            adapter.reloadData(isFav, sharedViewModel);
         }
     }
 
@@ -62,9 +62,9 @@ public class ListFragment extends Fragment {
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
         if (sharedViewModel.isHistory()) {
-            adapter = new HistoryAdapter(requireContext(), isFav, "");
+            adapter = new HistoryAdapter(requireContext(), isFav, sharedViewModel);
         } else {
-            adapter = new PatternAdapter(requireContext(), isFav, "");
+            adapter = new PatternAdapter(requireContext(), isFav, sharedViewModel);
         }
 
         recyclerView.setAdapter((RecyclerView.Adapter<?>) adapter);
@@ -73,7 +73,22 @@ public class ListFragment extends Fragment {
             @Override
             public void onChanged(String searchQuery) {
                 if (adapter != null) {
-                    adapter.reloadData(isFav, searchQuery);
+                    sharedViewModel.setSearchText(searchQuery);
+                    adapter.reloadData(isFav, sharedViewModel);
+                    if (((RecyclerView.Adapter<?>) adapter).getItemCount() == 0)
+                        messageText.setVisibility(View.VISIBLE);
+                    else
+                        messageText.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        sharedViewModel.getSort().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String sort) {
+                if (adapter != null) {
+                    sharedViewModel.setSelectedSort(sort);
+                    adapter.reloadData(isFav, sharedViewModel);
                     if (((RecyclerView.Adapter<?>) adapter).getItemCount() == 0)
                         messageText.setVisibility(View.VISIBLE);
                     else

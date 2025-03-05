@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.querygenie.R;
 import com.example.querygenie.data.DBHelper;
 import com.example.querygenie.data.model.PatternModel;
+import com.example.querygenie.presentation.viewmodel.SharedViewModel;
 
 import java.util.ArrayList;
 
@@ -25,15 +26,15 @@ public class PatternAdapter extends RecyclerView.Adapter<PatternAdapter.ViewHold
     private boolean isFav;
     private ArrayList<PatternModel> items;
 
-    public PatternAdapter(Context context, boolean isFav, String searchQuery) {
+    public PatternAdapter(Context context, boolean isFav, SharedViewModel sharedViewModel) {
         this.dbPattern = new DBHelper(context);
         this.inflater = LayoutInflater.from(context);
-        reloadData(isFav, searchQuery);
+        reloadData(isFav, sharedViewModel);
     }
 
-    public void reloadData(boolean isFav, String searchQuery) {
+    public void reloadData(boolean isFav, SharedViewModel sharedViewModel) {
         this.isFav = isFav;
-        items = dbPattern.filterLikePatterns(isFav, searchQuery);
+        items = dbPattern.filterLikePatterns(isFav, sharedViewModel.getSearchText());
         notifyDataSetChanged();
     }
 

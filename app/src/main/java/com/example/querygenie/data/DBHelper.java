@@ -236,7 +236,7 @@ public class DBHelper {
         return arr;
     }
 
-    public ArrayList<QueryModel> filterLikeHistory(boolean isFav, String line) {
+    public ArrayList<QueryModel> filterLikeHistory(boolean isFav, String line, int sortId) {
         ArrayList<QueryModel> arr = new ArrayList<>();
 
         String query = "SELECT * FROM " + TABLE_HISTORY + " WHERE " + COLUMN_QUERY + " LIKE ?";
@@ -244,6 +244,10 @@ public class DBHelper {
         if (isFav) {
             query += " AND " + COLUMN_ISLIKED + " = 1";
         }
+        if (sortId == 1)
+            query += " ORDER BY " + COLUMN_DATE + " DESC";
+        else if (sortId == 2)
+            query += " ORDER BY " + COLUMN_COUNT + " DESC";
 
         String[] selectionArgs = new String[]{"%" + line + "%"};
 
@@ -257,7 +261,7 @@ public class DBHelper {
         return arr;
     }
 
-    public int findQuery(String role, String goal, String environment, String queryText){
+    public int findQuery(String role, String goal, String environment, String queryText) {
         String query = "SELECT * FROM " + TABLE_HISTORY
                 + " WHERE LOWER(" + COLUMN_ROLE + ") = LOWER(?) "
                 + "AND LOWER(" + COLUMN_GOAL + ") = LOWER(?) "
