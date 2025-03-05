@@ -85,6 +85,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             notifyItemRemoved(position);
             notifyItemRangeChanged(position, items.size());
         });
+
+        holder.use_but.setOnClickListener(view -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("QueryID", items.get(position).getId());
+
+            Navigation.findNavController(view)
+                    .navigate(R.id.action_historyFragment_to_homepageFragment, bundle);
+        });
     }
 
     @Override

@@ -14,8 +14,6 @@ import android.widget.TextView;
 import com.example.querygenie.R;
 import com.example.querygenie.domain.query.ManageQuery;
 
-import java.util.Map;
-
 public class ItemQueryFragment extends Fragment {
     ManageQuery query;
 

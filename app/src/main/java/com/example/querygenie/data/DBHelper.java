@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.example.querygenie.data.model.PatternModel;
 import com.example.querygenie.data.model.QueryModel;
@@ -256,6 +255,21 @@ public class DBHelper {
             } while (mCursor.moveToNext());
         }
         return arr;
+    }
+
+    public int findQuery(String role, String goal, String environment, String queryText){
+        String query = "SELECT * FROM " + TABLE_HISTORY
+                + " WHERE LOWER(" + COLUMN_ROLE + ") = LOWER(?) "
+                + "AND LOWER(" + COLUMN_GOAL + ") = LOWER(?) "
+                + "AND LOWER(" + COLUMN_ENVIRONMENT + ") = LOWER(?) "
+                + "AND LOWER(" + COLUMN_QUERY + ") = LOWER(?)";
+        String[] selectionArgs = new String[]{role, goal, environment, queryText};
+
+        Cursor mCursor = mDataBase.rawQuery(query, selectionArgs);
+        mCursor.moveToFirst();
+        if (mCursor.moveToFirst())
+            return getQueryModel(mCursor).getId();
+        return 0;
     }
 
     private class OpenHelper extends SQLiteOpenHelper {

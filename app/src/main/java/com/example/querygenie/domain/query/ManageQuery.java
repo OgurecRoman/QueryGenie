@@ -71,21 +71,38 @@ public class ManageQuery {
     }
 
     public void addQuery() {
+        int id = dataBase.findQuery(role, goal, environment, textQuery);
         date = LocalDateTime.now();
         DateTimeFormatter customFormatter = new DateTimeFormatterBuilder()
                 .appendPattern("dd/MM/yyyy HH:mm:ss")
                 .toFormatter();
+        if (id > 0) {
+            QueryModel queryModel = dataBase.selectQuery(id);
+            queryModel.setCount(queryModel.getCount() + 1);
+            queryModel.setAnswer(textAnswer);
+            queryModel.setDate(date.format(customFormatter));
+            dataBase.updateQuery(queryModel);
+            return;
+        }
         dataBase.insertQuery(role, goal, environment, textQuery, textAnswer,
                 date.format(customFormatter), 1, false);
     }
 
-    public void selectQuery(int id){
+    public void selectQuery(int id) {
         QueryModel queryModel = dataBase.selectQuery(id);
         this.role = queryModel.getRole();
         this.goal = queryModel.getGoal();
         this.environment = queryModel.getEnvironment();
         this.textQuery = queryModel.getQuery();
         this.textAnswer = queryModel.getAnswer();
+    }
+
+    public void installQuery(int id) {
+        QueryModel pattern = dataBase.selectQuery(id);
+        setRole(pattern.getRole());
+        setGoal(pattern.getGoal());
+        setEnvironment(pattern.getEnvironment());
+        setTextQuery(pattern.getQuery());
     }
 
     public void setTextAnswer(String textAnswer) {

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -139,6 +140,14 @@ public class HomepageFragment extends Fragment {
             if (mIsEdit){
                 saveBut.setText(R.string.save_changes);
             }
+        }
+
+        if (mQueryId > 0){
+            query.installQuery(mQueryId);
+            editRole.setText(query.getRole());
+            editGoal.setText(query.getGoal());
+            editEnvironment.setText(query.getEnvironment());
+            editQuery.setText(query.getTextQuery());
         }
 
         sendBut.setOnClickListener(new View.OnClickListener() {
