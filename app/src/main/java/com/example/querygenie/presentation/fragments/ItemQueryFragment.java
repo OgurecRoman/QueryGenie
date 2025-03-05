@@ -14,14 +14,16 @@ import android.widget.TextView;
 import com.example.querygenie.R;
 import com.example.querygenie.domain.query.ManageQuery;
 
-public class itemQueryFragment extends Fragment {
+import java.util.Map;
+
+public class ItemQueryFragment extends Fragment {
     ManageQuery query;
 
     private static final String ARG_QUERY = "QueryID";
 
     private int mQueryID;
 
-    public itemQueryFragment() {
+    public ItemQueryFragment() {
     }
 
     @Override

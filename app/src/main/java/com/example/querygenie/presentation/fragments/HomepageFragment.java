@@ -26,24 +26,27 @@ import com.example.querygenie.R;
 import com.example.querygenie.domain.query.ManageQuery;
 
 
-public class homepageFragment extends Fragment {
+public class HomepageFragment extends Fragment {
     private ManageQuery query;
     private TextView answerView;
     private ProgressBar progressBar;
 
     private static final String ARG_PATTERN = "PatternID";
     private static final String ARG_EDIT = "IsEdit";
+    private static final String ARG_QUERY = "QueryID";
 
     private int mPatternId;
+    private int mQueryId;
     private boolean mIsEdit;
 
-    public homepageFragment() {}
+    public HomepageFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mPatternId = getArguments().getInt(ARG_PATTERN);
+            mQueryId = getArguments().getInt(ARG_QUERY);
             mIsEdit = getArguments().getBoolean(ARG_EDIT);
         }
     }

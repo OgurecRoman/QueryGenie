@@ -2,6 +2,7 @@ package com.example.querygenie.domain.adapter;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,12 +23,20 @@ import java.util.ArrayList;
 public class PatternAdapter extends RecyclerView.Adapter<PatternAdapter.ViewHolder> {
     private final LayoutInflater inflater;
     private final DBHelper dbPattern;
-    private final ArrayList<PatternModel> items;
+    private boolean isFav;
+    private ArrayList<PatternModel> items;
 
-    public PatternAdapter(Context context, String line) {
+    public PatternAdapter(Context context, boolean isFav, String searchQuery) {
         this.dbPattern = new DBHelper(context);
         this.inflater = LayoutInflater.from(context);
-        items = dbPattern.filterLikePatterns(line);
+        reloadData(isFav, searchQuery);
+    }
+
+    public void reloadData(boolean isFav, String searchQuery) {
+        this.isFav = isFav;
+        items = dbPattern.filterLikePatterns(isFav, searchQuery);
+        Log.d("aaa", "мы перезагружаем данные " + items.size());
+        notifyDataSetChanged();
     }
 
     @Override
@@ -44,16 +53,24 @@ public class PatternAdapter extends RecyclerView.Adapter<PatternAdapter.ViewHold
         holder.role_text.setText(patternModel.getRole());
         holder.goal_text.setText(patternModel.getGoal());
         holder.environment_text.setText(patternModel.getEnvironment());
-        if (isliked) {
+        if (isliked)
             holder.favourite_but.setImageResource(R.drawable.heartactive);
-        }
+        else
+            holder.favourite_but.setImageResource(R.drawable.heart);
 
         holder.favourite_but.setOnClickListener(view -> {
             patternModel.setIsliked(!patternModel.getIsliked());
             dbPattern.updatePattern(patternModel);
-            if (patternModel.getIsliked())
-                holder.favourite_but.setImageResource(R.drawable.heartactive);
-            else holder.favourite_but.setImageResource(R.drawable.heart);
+
+            if (isFav) {
+                items.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, items.size());
+            } else {
+                if (patternModel.getIsliked())
+                    holder.favourite_but.setImageResource(R.drawable.heartactive);
+                else holder.favourite_but.setImageResource(R.drawable.heart);
+            }
         });
 
         holder.delete_but.setOnClickListener(view -> {

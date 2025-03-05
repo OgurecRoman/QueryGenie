@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/homepageFragment"
-        android:name="com.example.querygenie.presentation.fragments.homepageFragment"
+        android:name="com.example.querygenie.presentation.fragments.HomepageFragment"
         android:label="Запросы"
         tools:layout="@layout/fragment_homepage" />
     <fragment
         android:id="@+id/patternsFragment"
-        android:name="com.example.querygenie.presentation.fragments.patternsFragment"
+        android:name="com.example.querygenie.presentation.fragments.PatternsFragment"
         android:label="Шаблоны"
         tools:layout="@layout/fragment_patterns" >
         <action
@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/historyFragment"
-        android:name="com.example.querygenie.presentation.fragments.historyFragment"
+        android:name="com.example.querygenie.presentation.fragments.HistoryFragment"
         android:label="История"
         tools:layout="@layout/fragment_history" >
         <action
@@ -33,7 +33,7 @@
     </fragment>
     <fragment
         android:id="@+id/itemQueryFragment"
-        android:name="com.example.querygenie.presentation.fragments.itemQueryFragment"
+        android:name="com.example.querygenie.presentation.fragments.ItemQueryFragment"
         android:label="fragment_item_query"
         tools:layout="@layout/fragment_item_query" >
         <action
