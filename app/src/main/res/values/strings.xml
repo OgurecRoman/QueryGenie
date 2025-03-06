@@ -29,5 +29,7 @@
     <string name="sort_date">По дате</string>
     <string name="sort_popular">По популярности</string>
     <string name="sort_clean">Сбросить фильтр</string>
+    <string name="notification">Напоминание!</string>
+    <string name="notification_text">QueryGenie скучает :( Пора отправить запрос!</string>
 
 </resources>
