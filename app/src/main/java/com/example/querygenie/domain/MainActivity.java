@@ -7,8 +7,8 @@ import android.os.Bundle;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
 
 import com.example.querygenie.R;
 import com.example.querygenie.domain.receivers.NotificationReceiver;
@@ -24,7 +24,20 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView nav_view = findViewById(R.id.nav_view);
         NavController navController = Navigation.findNavController(this, R.id.my_nav_graph);
-        NavigationUI.setupWithNavController(nav_view, navController);
+
+        nav_view.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+
+            NavOptions navOptions = new NavOptions.Builder()
+                    .setEnterAnim(R.anim.slide_in_right)
+                    .setExitAnim(R.anim.slide_out_left)
+                    .setPopEnterAnim(R.anim.slide_in_left)
+                    .setPopExitAnim(R.anim.slide_out_right)
+                    .build();
+
+            navController.navigate(itemId, null, navOptions);
+            return true;
+        });
 
         showNotifications();
     }

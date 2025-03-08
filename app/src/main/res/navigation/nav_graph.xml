@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/homepageFragment">
@@ -8,36 +8,87 @@
     <fragment
         android:id="@+id/homepageFragment"
         android:name="com.example.querygenie.presentation.fragments.HomepageFragment"
-        android:label="Запросы"
-        tools:layout="@layout/fragment_homepage" />
+        android:label="@string/queries"
+        tools:layout="@layout/fragment_homepage">
+
+        <action
+            android:id="@+id/action_home_to_history"
+            app:destination="@id/historyFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+        <action
+            android:id="@+id/action_home_to_pattern"
+            app:destination="@id/patternsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+    </fragment>
+
     <fragment
         android:id="@+id/patternsFragment"
         android:name="com.example.querygenie.presentation.fragments.PatternsFragment"
-        android:label="Шаблоны"
-        tools:layout="@layout/fragment_patterns" >
+        android:label="@string/patterns"
+        tools:layout="@layout/fragment_patterns">
+
+        <action
+            android:id="@+id/action_pattern_to_history"
+            app:destination="@id/historyFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
         <action
             android:id="@+id/action_patternsFragment_to_homepageFragment"
-            app:destination="@id/homepageFragment" />
+            app:destination="@id/homepageFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"/>
+
     </fragment>
+
     <fragment
         android:id="@+id/historyFragment"
         android:name="com.example.querygenie.presentation.fragments.HistoryFragment"
-        android:label="История"
-        tools:layout="@layout/fragment_history" >
+        android:label="@string/history"
+        tools:layout="@layout/fragment_history">
+
         <action
             android:id="@+id/action_historyFragment_to_homepageFragment"
-            app:destination="@id/homepageFragment" />
+            app:destination="@id/homepageFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+
         <action
             android:id="@+id/action_historyFragment_to_itemQueryFragment"
-            app:destination="@id/itemQueryFragment" />
+            app:destination="@id/itemQueryFragment"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/slide_out_bottom"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
+
     <fragment
         android:id="@+id/itemQueryFragment"
         android:name="com.example.querygenie.presentation.fragments.ItemQueryFragment"
         android:label="fragment_item_query"
-        tools:layout="@layout/fragment_item_query" >
+        tools:layout="@layout/fragment_item_query">
+
         <action
             android:id="@+id/action_itemQueryFragment_to_historyFragment"
-            app:destination="@id/historyFragment" />
+            app:destination="@id/historyFragment"
+            app:enterAnim="@anim/slide_out_bottom"
+            app:exitAnim="@anim/slide_in_bottom"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
     </fragment>
 </navigation>
