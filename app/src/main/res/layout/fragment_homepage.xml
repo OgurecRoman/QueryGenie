@@ -11,8 +11,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="60dp"
         android:layout_weight="10"
+        android:elevation="60dp"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -176,8 +176,7 @@
                 android:fontFamily="@font/font_family"
                 android:gravity="start"
                 android:hint="@string/help_text"
-                android:textStyle="italic"
-                tools:ignore="NestedWeights" />
+                android:textStyle="italic" />
 
         </LinearLayout>
 
@@ -217,10 +216,10 @@
 
             <ProgressBar
                 android:id="@+id/loading"
-                style="?android:attr/progressBarStyleLarge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"></ProgressBar>
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_weight="0"
+                android:indeterminateDrawable="@drawable/progressbar_style" />
 
             <TextView
                 android:id="@+id/ans"
