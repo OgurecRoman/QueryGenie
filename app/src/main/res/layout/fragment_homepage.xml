@@ -34,6 +34,7 @@
                 android:id="@+id/butDeletePattern"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
+                android:background="@drawable/imagebut_ripple"
                 android:src="@drawable/clear" />
 
         </LinearLayout>
@@ -155,6 +156,7 @@
                 android:id="@+id/butDeleteQuery"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
+                android:background="@drawable/imagebut_ripple"
                 android:src="@drawable/clear" />
 
         </LinearLayout>

@@ -31,6 +31,7 @@
                 android:id="@+id/favouriteBut"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:background="@drawable/imagebut_ripple"
                 android:src="@drawable/heart" />
 
         </LinearLayout>
@@ -138,12 +139,14 @@
                 android:id="@+id/editBut"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:background="@drawable/imagebut_ripple"
                 android:src="@drawable/edit" />
 
             <ImageButton
                 android:id="@+id/deleteBut"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
+                android:background="@drawable/imagebut_ripple"
                 android:src="@drawable/delete" />
 
         </LinearLayout>

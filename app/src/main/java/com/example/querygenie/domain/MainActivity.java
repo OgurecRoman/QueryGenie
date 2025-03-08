@@ -56,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
 
         alarmManager.setRepeating(
                 AlarmManager.RTC,
-                System.currentTimeMillis() + 1000 * 60 * 60,
-                1000 * 60 * 60,
+                System.currentTimeMillis() + 1000 * 60,
+                1000 * 60,
                 pendingIntent
         );
     }
