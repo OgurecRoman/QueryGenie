@@ -1,23 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/homepageFragment">
 
     <fragment
         android:id="@+id/homepageFragment"
-        android:name="com.example.querygenie.presentation.fragments.homepageFragment"
+        android:name="com.example.querygenie.presentation.fragments.HomepageFragment"
         android:label="Запросы"
         tools:layout="@layout/fragment_homepage" />
     <fragment
         android:id="@+id/patternsFragment"
-        android:name="com.example.querygenie.presentation.fragments.patternsFragment"
+        android:name="com.example.querygenie.presentation.fragments.PatternsFragment"
         android:label="Шаблоны"
-        tools:layout="@layout/fragment_patterns" />
+        tools:layout="@layout/fragment_patterns" >
+        <action
+            android:id="@+id/action_patternsFragment_to_homepageFragment"
+            app:destination="@id/homepageFragment" />
+    </fragment>
     <fragment
         android:id="@+id/historyFragment"
-        android:name="com.example.querygenie.presentation.fragments.historyFragment"
+        android:name="com.example.querygenie.presentation.fragments.HistoryFragment"
         android:label="История"
-        tools:layout="@layout/fragment_history" />
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/action_historyFragment_to_homepageFragment"
+            app:destination="@id/homepageFragment" />
+        <action
+            android:id="@+id/action_historyFragment_to_itemQueryFragment"
+            app:destination="@id/itemQueryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/itemQueryFragment"
+        android:name="com.example.querygenie.presentation.fragments.ItemQueryFragment"
+        android:label="fragment_item_query"
+        tools:layout="@layout/fragment_item_query" >
+        <action
+            android:id="@+id/action_itemQueryFragment_to_historyFragment"
+            app:destination="@id/historyFragment" />
+    </fragment>
 </navigation>
