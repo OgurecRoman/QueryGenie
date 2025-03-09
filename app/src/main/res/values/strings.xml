@@ -16,11 +16,15 @@
     <string name="environment">Окружение</string>
     <string name="pattern_head">Шаблон</string>
     <string name="use">Использовать</string>
+    <string name="filter">Фильтр</string>
     <string name="save">Сохранить</string>
     <string name="save_changes">Сохранить изменения</string>
     <string name="not_found">Ничего не найдено :(</string>
     <string name="cancel">Отмена</string>
     <string name="back">Назад</string>
+    <string name="delete">Удалить</string>
+    <string name="edit">Редактировать</string>
+    <string name="clear">Очистить</string>
     <string name="search">Поиск</string>
     <string name="all">Все</string>
     <string name="favourite">Избранное</string>

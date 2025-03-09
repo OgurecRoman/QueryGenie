@@ -24,6 +24,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
 
     private static final int NOTIFICATION_PERMISSION_CODE = 100;
+    private final long time = 1000 * 60 * 60 * 24;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,8 +92,8 @@ public class MainActivity extends AppCompatActivity {
 
         alarmManager.setRepeating(
                 AlarmManager.RTC,
-                System.currentTimeMillis() + 1000 * 60,
-                1000 * 60,
+                System.currentTimeMillis() + time,
+                time, // every day
                 pendingIntent
         );
     }

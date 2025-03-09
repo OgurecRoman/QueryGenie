@@ -21,7 +21,7 @@
 
             <TextView
                 android:id="@+id/textQuery"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
@@ -34,6 +34,7 @@
                 android:layout_height="40dp"
                 android:layout_marginStart="8dp"
                 android:background="@drawable/imagebut_ripple"
+                android:contentDescription="@string/favourite"
                 android:src="@drawable/heart" />
 
         </LinearLayout>
@@ -100,7 +101,7 @@
 
             <Button
                 android:id="@+id/useBut"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
@@ -114,6 +115,7 @@
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:background="@drawable/imagebut_ripple"
+                android:contentDescription="@string/delete"
                 android:src="@drawable/delete" />
 
         </LinearLayout>
